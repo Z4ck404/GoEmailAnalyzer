@@ -7,7 +7,7 @@ import (
 )
 
 var CLI struct {
-	Scan cmd.ScanCLI `cmd:"" help:"Scan a eml file"`
+	Scan cmd.ScanCLI `cmd:"" help:"scan an eml file"`
 }
 
 func main() {
