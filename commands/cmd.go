@@ -1,6 +1,6 @@
 package commands
 
-type ScanCLI struct {
+type ParseCLI struct {
 	Filename string `name:"filename" help:"The eml file name to scan" required:""`
 
 	Headers      bool `help:"Get the headers of the email"`
