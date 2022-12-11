@@ -1,5 +1,10 @@
 package commands
 
+func readEmlFile(path string) (string, error) {
+	//Todo find a package to read eml files
+	return "", nil
+}
+
 func getHeaders() error {
 	// stuff here
 	return nil

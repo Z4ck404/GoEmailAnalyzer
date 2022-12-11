@@ -18,6 +18,11 @@ type ParseCLI struct {
 }
 
 func (cmd *ParseCLI) Run() error {
+	//email,err := readEmlFile(cmd.Filename);
+	_, err := readEmlFile(cmd.Filename)
+	if err != nil {
+		return fmt.Errorf("Could not read the eml file %v \n", color.RedString(err.Error()))
+	}
 	if cmd.Headers {
 		err := getHeaders()
 		if err != nil {
