@@ -1,12 +1,29 @@
 package commands
 
-func readEmlFile(path string) (string, error) {
-	//Todo find a package to read eml files
-	return "", nil
+import (
+	"fmt"
+	"os"
+
+	"github.com/fatih/color"
+	"github.com/sg3des/eml"
+)
+
+func readEmlFile(filePath string) (eml.Message, error) {
+	rawData, err := os.ReadFile(filePath)
+	if err != nil {
+		return eml.Message{}, fmt.Errorf("Couldn't read the eml file %v", color.RedString(err.Error()))
+	}
+
+	email, err := eml.Parse(rawData)
+	if err != nil {
+		return eml.Message{}, fmt.Errorf("Couldn't parse the eml file %v", color.RedString(err.Error()))
+	}
+	return email, nil
 }
 
-func getHeaders() error {
-	// stuff here
+func getHeaders(emlContent eml.Message) error {
+	//fmt.Print(emlContent.Text)
+	fmt.Print(emlContent.HeaderInfo.Subject)
 	return nil
 }
 
