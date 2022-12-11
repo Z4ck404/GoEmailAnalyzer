@@ -19,12 +19,13 @@ type ParseCLI struct {
 
 func (cmd *ParseCLI) Run() error {
 	//email,err := readEmlFile(cmd.Filename);
-	_, err := readEmlFile(cmd.Filename)
+	email, err := readEmlFile(cmd.Filename)
 	if err != nil {
 		return fmt.Errorf("Could not read the eml file %v \n", color.RedString(err.Error()))
 	}
+
 	if cmd.Headers {
-		err := getHeaders()
+		err := getHeaders(email)
 		if err != nil {
 			return fmt.Errorf("Could not get the headers %v \n", color.RedString(err.Error()))
 		}
