@@ -69,7 +69,7 @@ func (cmd *ParseCLI) Run() error {
 		}
 	}
 	if cmd.Content {
-		err := getContent()
+		err := getContent(email)
 		if err != nil {
 			return fmt.Errorf("Could not get the content %v \n", color.RedString(err.Error()))
 		}

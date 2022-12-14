@@ -91,8 +91,18 @@ func getDigest() error {
 	return nil
 }
 
-func getContent() error {
-	// stuff here
+func getContent(emlContent eml.Message) error {
+	// contentAttributes := contentObject{
+	// 	Name: "content",
+	// 	Attributes: []eml.Header{
+	// 		{
+	// 			Key:   "Message Body",
+	// 			Value: emlContent.Text,
+	// 		},
+	// 	},
+	// }
+	//_prettyTable(contentAttributes)
+	fmt.Print(emlContent.Text)
 	return nil
 }
 
