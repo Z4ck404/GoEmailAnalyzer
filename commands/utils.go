@@ -1,6 +1,7 @@
 package commands
 
 import (
+	"encoding/json"
 	"fmt"
 	"os"
 
@@ -32,37 +33,51 @@ func readEmlFile(filePath string) (eml.Message, error) {
 	return email, nil
 }
 
-func getHeaders(emlContent eml.Message) error {
+func getHeaders(emlContent eml.Message, getMoreDetails bool) error {
 
 	//show all the headers
-
-	//ignore_fields := []string{"FullHeaders", "OptHeaders"}
-	headerContent := contentObject{
+	headerInfo := emlContent.HeaderInfo
+	fullHeaderAttributes := contentObject{
 		Name:       "header",
-		Attributes: emlContent.HeaderInfo.FullHeaders,
+		Attributes: headerInfo.FullHeaders,
+	}
+	sentTo, _ := json.Marshal(headerInfo.To)
+	shortHeaderAttributes := contentObject{
+		Name: "header",
+		Attributes: []eml.Header{
+			{
+				Key:   "date",
+				Value: headerInfo.Date.String(),
+			},
+			{
+				Key:   "sender",
+				Value: headerInfo.Sender.String(),
+			},
+			{
+				Key:   "subject",
+				Value: headerInfo.Subject,
+			},
+			{
+				Key:   "Sent to",
+				Value: string(sentTo),
+			},
+			{
+				Key:   "subject",
+				Value: headerInfo.Subject,
+			},
+			{
+				Key:   "subject",
+				Value: headerInfo.Subject,
+			},
+		},
 	}
 
-	// v := reflect.ValueOf(emlContent.HeaderInfo)
-	// typeOfS := v.Type()
+	if getMoreDetails {
+		_prettyTable(fullHeaderAttributes)
+	} else {
+		_prettyTable(shortHeaderAttributes)
+	}
 
-	// for i := 0; i < v.NumField(); i++ {
-	// 	headerFiledName := typeOfS.Field(i).Name
-	// 	headerFiledValue := v.Field(i).Interface()
-
-	// 	for _, element := range ignore_fields {
-	// 		if headerFiledName != element {
-	// 			fmt.Print(headerFiledName)
-	// 			headerField := attribute{
-	// 				key:   headerFiledName,
-	// 				value: fmt.Sprintf("%v", headerFiledValue),
-	// 			}
-	// 			headerContent.attributes = append(headerContent.attributes, headerField)
-	// 		}
-	// 	}
-
-	// }
-
-	_prettyTable(headerContent)
 	return nil
 }
 
