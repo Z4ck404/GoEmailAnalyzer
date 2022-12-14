@@ -9,12 +9,26 @@ import (
 type ParseCLI struct {
 	Filename string `name:"filename" short:"f" help:"The eml file name to scan" required:""`
 
-	Headers      bool `help:"Get the headers of the email"`
-	Content      bool `help:"Get the content of the email"`
-	Hash         bool `help:"Get the hash of the email"`
-	Links        bool `help:"Get the links in the email file"`
-	Digests      bool `help:"Get the digests of the eml file"`
-	Attachements bool `help:"Get the attachments from the eml file"`
+	Headers         bool `name:"headers" help:"Get the headers of the email"`
+	DetailedHeaders bool `name:"detailed-headers" help:"Get all the headers of the email"`
+	Content         bool `help:"Get the content of the email"`
+	Hash            bool `help:"Get the hash of the email"`
+	Links           bool `help:"Get the links in the email file"`
+	Digests         bool `help:"Get the digests of the eml file"`
+	Attachements    bool `help:"Get the attachments from the eml file"`
+}
+
+type HeadersCLI struct {
+	Filename string `name:"filename" short:"f" help:"The eml file name to scan" required:""`
+
+	Short bool `name:"short" help:"Get basic headers"`
+	Long  bool `name:"long" help:"Get all headers" xor:"short,long"`
+	// More sub-commands to be added later
+}
+
+func (cmd *HeadersCLI) Run() error {
+
+	return nil
 }
 
 func (cmd *ParseCLI) Run() error {
@@ -23,13 +37,13 @@ func (cmd *ParseCLI) Run() error {
 	if err != nil {
 		return fmt.Errorf("Could not read the eml file \n %v  \n", color.RedString(err.Error()))
 	}
-
-	if cmd.Headers {
-		err := getHeaders(email)
+	if cmd.Headers || cmd.DetailedHeaders {
+		err := getHeaders(email, cmd.DetailedHeaders)
 		if err != nil {
 			return fmt.Errorf("Could not get the headers \n %v \n ", color.RedString(err.Error()))
 		}
 	}
+
 	if cmd.Hash {
 		err := getHash()
 		if err != nil {
