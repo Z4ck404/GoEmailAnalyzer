@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
+	"regexp"
 
 	"github.com/fatih/color"
 	"github.com/jedib0t/go-pretty/table"
@@ -102,7 +103,8 @@ func getContent(emlContent eml.Message) error {
 	// 	},
 	// }
 	//_prettyTable(contentAttributes)
-	fmt.Print(emlContent.Text)
+	regex := regexp.MustCompile(`/\*[^*]*\*+(?:[^*/][^*]*\*+)*/|<[^>]*>|{[^}]*}`)
+	fmt.Print(regex.ReplaceAllString(emlContent.Text, ""))
 	return nil
 }
 
