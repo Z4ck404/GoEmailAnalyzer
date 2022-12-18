@@ -18,19 +18,6 @@ type ParseCLI struct {
 	Attachements    bool `help:"Get the attachments from the eml file"`
 }
 
-type HeadersCLI struct {
-	Filename string `name:"filename" short:"f" help:"The eml file name to scan" required:""`
-
-	Short bool `name:"short" help:"Get basic headers"`
-	Long  bool `name:"long" help:"Get all headers" xor:"short,long"`
-	// More sub-commands to be added later
-}
-
-func (cmd *HeadersCLI) Run() error {
-
-	return nil
-}
-
 func (cmd *ParseCLI) Run() error {
 	//email,err := readEmlFile(cmd.Filename);
 	email, err := readEmlFile(cmd.Filename)
@@ -51,7 +38,7 @@ func (cmd *ParseCLI) Run() error {
 		}
 	}
 	if cmd.Links {
-		err := getLinks()
+		err := getLinks(email)
 		if err != nil {
 			return fmt.Errorf("Could not get the Links %v \n", color.RedString(err.Error()))
 		}

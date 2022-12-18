@@ -8,6 +8,7 @@ import (
 
 	"github.com/fatih/color"
 	"github.com/jedib0t/go-pretty/table"
+	"github.com/microcosm-cc/bluemonday"
 	"github.com/sg3des/eml"
 )
 
@@ -93,18 +94,10 @@ func getDigest() error {
 }
 
 func getContent(emlContent eml.Message) error {
-	// contentAttributes := contentObject{
-	// 	Name: "content",
-	// 	Attributes: []eml.Header{
-	// 		{
-	// 			Key:   "Message Body",
-	// 			Value: emlContent.Text,
-	// 		},
-	// 	},
-	// }
-	//_prettyTable(contentAttributes)
-	regex := regexp.MustCompile(`/\*[^*]*\*+(?:[^*/][^*]*\*+)*/|<[^>]*>|{[^}]*}`)
-	fmt.Print(regex.ReplaceAllString(emlContent.Text, ""))
+	policy := bluemonday.StrictPolicy()
+	htmlText := policy.Sanitize(emlContent.Html)                                          // remove html/css code
+	filteredText := regexp.MustCompile(`(?m)^[ \t]*\r?\n`).ReplaceAllString(htmlText, "") // remove empty lines
+	fmt.Print(filteredText)
 	return nil
 }
 
@@ -113,8 +106,16 @@ func getAttachements() error {
 	return nil
 }
 
-func getLinks() error {
-	// stuff here
+func getLinks(emlContent eml.Message) error {
+	links := contentObject{Name: "links"}
+	re := regexp.MustCompile(`(?:https?://)?(?:[\w-]+\.)+[a-zA-Z]{2,6}`)
+	domains := re.FindAllString(emlContent.Text, -1)
+	for _, link := range domains {
+		links.Attributes = append(links.Attributes, eml.Header{
+			Value: link,
+		})
+	}
+	_prettyTable(links)
 	return nil
 }
 
