@@ -19,6 +19,7 @@ Analyze your suspicious emails and extract headers, links and hashes.
     ```
 
     To see all the availables commands, run:  
-    ````
+
+    ```
     mailp parse --help
     ```
