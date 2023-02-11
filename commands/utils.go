@@ -43,6 +43,7 @@ func getHeaders(emlContent eml.Message, getMoreDetails bool) error {
 		Name:       "header",
 		Attributes: headerInfo.FullHeaders,
 	}
+
 	sentTo, _ := json.Marshal(headerInfo.To)
 	shortHeaderAttributes := contentObject{
 		Name: "header",
@@ -62,10 +63,6 @@ func getHeaders(emlContent eml.Message, getMoreDetails bool) error {
 			{
 				Key:   "Sent to",
 				Value: string(sentTo),
-			},
-			{
-				Key:   "subject",
-				Value: headerInfo.Subject,
 			},
 			{
 				Key:   "subject",
@@ -125,7 +122,7 @@ func _prettyTable(c contentObject) {
 	t.AppendHeader(table.Row{fmt.Sprintf("%s Field", c.Name), fmt.Sprintf("%v Value", c.Name)})
 	for _, attribute := range c.Attributes {
 		t.AppendRow([]interface{}{attribute.Key, attribute.Value})
-		t.AppendRow([]interface{}{" ", " "})
+		t.AppendRow([]interface{}{"", ""})
 	}
 	t.Render()
 }
