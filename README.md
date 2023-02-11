@@ -15,11 +15,11 @@ Analyze your suspicious emails and extract headers, links and hashes.
 2. Prepare the **eml** file (Email clients support exporting emails in the eml format) 
 3. run the **CLI**
     ```
-    mailp parse -f <example.eml> --content
+    ./bin/mailp parse -f <example.eml> --content
     ```
 
     To see all the availables commands, run:  
 
     ```
-    mailp parse --help
+    ./bin/mailp parse --help
     ```
