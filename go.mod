@@ -16,7 +16,7 @@ require (
 	github.com/mitchellh/mapstructure v1.3.3 // indirect
 	github.com/oklog/ulid v1.3.1 // indirect
 	go.mongodb.org/mongo-driver v1.10.0 // indirect
-	golang.org/x/net v0.0.0-20221002022538-bcab6841153b // indirect
+	golang.org/x/net v0.7.0 // indirect
 )
 
 require (
@@ -28,5 +28,5 @@ require (
 	github.com/paulrosania/go-charset v0.0.0-20190326053356-55c9d7a5834c // indirect
 	github.com/rivo/uniseg v0.2.0 // indirect
 	github.com/sg3des/eml v0.0.0-20151119111839-451f15451b51
-	golang.org/x/sys v0.0.0-20220728004956-3c1f35247d10 // indirect
+	golang.org/x/sys v0.5.0 // indirect
 )
